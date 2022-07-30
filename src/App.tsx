@@ -1,22 +1,44 @@
 import { useState } from "react";
 
-interface Joke {
-  id: number;
-  type: string;
-  setup: string;
-  punchline: string;
+interface DogPic {
+  message: string;
+  status: string 
 }
 
 function App() {
-  const [joke, setJoke] = useState<Joke>();
+  const [dogPic, setDogPic] = useState<string>();
 
-  const handleGetJoke = async () => {
+  const handleGetDogPic = async () => {
     const response = await fetch(
-      "https://jokestemp.neillbogie.repl.co/jokes/general/random"
+      "https://dog.ceo/api/breeds/image/random"
     );
-    const jsonBody: Joke[] = await response.json();
-    setJoke(jsonBody[0]);
-  };
+    const jsonBody: DogPic= await response.json();
+    setDogPic(jsonBody.message);
+  }
+  return (
+    <>
+    <img  src={dogPic} />
+    <button onClick={handleGetDogPic}>Get Dog Picture</button>
+    </>
+  )
+}
+// interface Joke {
+//   id: number;
+//   type: string;
+//   setup: string;
+//   punchline: string;
+// }
+
+// function App() {
+//   const [joke, setJoke] = useState<Joke>();
+
+//   const handleGetJoke = async () => {
+//     const response = await fetch(
+//       "https://jokestemp.neillbogie.repl.co/jokes/general/random"
+//     );
+//     const jsonBody: Joke[] = await response.json();
+//     setJoke(jsonBody[0]);
+//   };
 
   // const handleGetJoke = () => {
   //   fetch("https://jokestemp.neillbogie.repl.co/jokes/general/random")
@@ -24,30 +46,30 @@ function App() {
   //     .then((jsonBody: Joke[]) => setJoke(jsonBody[0]));
   // };
 
-  if (joke) {
-    return (
-      <div>
-        <h1>Joke app</h1>
-        <details>
-          <summary>{joke.setup}</summary>
-          <p>{joke.punchline}</p>
-        </details>
-        <hr />
-        <button onClick={handleGetJoke}>Get another joke</button>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <h1>Joke app</h1>
-        <p>
-          Click the button to trigger a <code>fetch</code> that gets a random
-          joke from an API!
-        </p>
-        <button onClick={handleGetJoke}>Get joke</button>
-      </div>
-    );
-  }
-}
+//   if (joke) {
+//     return (
+//       <div>
+//         <h1>Joke app</h1>
+//         <details>
+//           <summary>{joke.setup}</summary>
+//           <p>{joke.punchline}</p>
+//         </details>
+//         <hr />
+//         <button onClick={handleGetJoke}>Get another joke</button>
+//       </div>
+//     );
+//   } else {
+//     return (
+//       <div>
+//         <h1>Joke app</h1>
+//         <p>
+//           Click the button to trigger a <code>fetch</code> that gets a random
+//           joke from an API!
+//         </p>
+//         <button onClick={handleGetJoke}>Get joke</button>
+//       </div>
+//     );
+//   }
+// }
 
 export default App;
